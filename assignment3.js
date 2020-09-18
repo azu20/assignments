@@ -73,8 +73,8 @@ function process1(linesArray) {
 /// <returns> An object containing two values </returns>
 function process2(valid_accounts) {
 
-    let dictionary = {};
-    let dictionary_whole_record = {};
+    let statement = {};
+    let statement_whole_record = {};
 
     valid_accounts.forEach((validLine) => {
 
@@ -88,25 +88,25 @@ function process2(valid_accounts) {
             const account_number = record_array[2];
             const money_amount = parseFloat(record_array[4]);
 
-            if (dictionary[account_number]) {
-                const old_value = dictionary[account_number];
+            if (statement[account_number]) {
+                const old_value = statement[account_number];
                 const new_value = old_value + money_amount;
-                dictionary[account_number] = new_value;
+                statement[account_number] = new_value;
 
-                const existing_entires = dictionary_whole_record[account_number];
+                const existing_entires = statement_whole_record[account_number];
                 existing_entires.push(validLine);
-                dictionary_whole_record[account_number] = existing_entires;
+                statement_whole_record[account_number] = existing_entires;
             } else {
                 /// <remarks>
-                /// if the account# is not found within the dictionary create a new entry
+                /// if the account# is not found within the statement create a new entry
                 /// </remarks>
-                dictionary[account_number] = money_amount;
-                dictionary_whole_record[account_number] = [validLine];
+                statement[account_number] = money_amount;
+                statement_whole_record[account_number] = [validLine];
             }
         }
     });
 
-    const data = { summarized_values: dictionary, all_records: dictionary_whole_record };
+    const data = { summarized_values: statement, all_records: statement_whole_record };
     return data;
 }
 
