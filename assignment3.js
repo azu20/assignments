@@ -1,34 +1,44 @@
 const fs = require('fs');
+////////////////////////////////////////////////////////////////////////////
+// Start of Part 1 of Assignment
+////////////////////////////////////////////////////////////////////////////
 
-if (process.argv.length !== 3 || !process.argv[2].startsWith("-D=")) {
+///to consolodate all 3 assignments, googled node.js command line arguments, found: process.argv = property is an inbuilt application programming interface of the process module which is used to get the arguments passed to the node. js process when run in the command line.
+
+//run the following argument when user has entered on command line: length is not equal to 3, or third position of the array, does not -D, then console log the following message and die - return 0 . if true then carry on. , argv - array with all the arguments typed in by user. 
+if (process.argv.length === 3 && process.argv[2].startsWith("-D=")) {
+    //why3? [node assinment3 -D="user input"]
+    //take the third element and split on the = sign - give me back an array and then give me the second element of that new array
+    const directory = process.argv[2].split("=")[1];
+
+    if (fs.existsSync(directory)) {
+        const all_files = fs.readdirSync(directory);
+        const txt_files = all_files.filter((fileName) => fileName.endsWith(".txt"));
+        // console.log(all_files);
+        // console.log(txt_files);
+
+        /// for each txt file, read the file, and pass it through each function. 
+        txt_files.forEach((file) => {
+            console.log(`${directory}\\${file}`);
+            //   read the file
+            const lines = readFile(`${directory}\\${file}`);
+            //  pass it to process 1
+            const valid_lines = process1(lines);
+            // pass it to process 2
+            const data = process2(valid_lines);
+            writeFile("output", data);
+        });
+
+    } else {
+        console.log(`The path you entered is invalid: ${directory}`)
+        return 0;
+    }
+
+} else {
     console.log("You must run with -D=DIRECTORY_NAME option");
     return 0;
 }
 
-const directory = process.argv[2].split("=")[1];
-
-if (fs.existsSync(directory)) {
-    const all_files = fs.readdirSync(directory);
-    const txt_files = all_files.filter((fileName) => fileName.endsWith(".txt"));
-    // console.log(all_files);
-    // console.log(txt_files);
-
-    /// for each txt file, read the file, and pass it through each function. 
-    txt_files.forEach((file) => {
-        console.log(`${directory}\\${file}`);
-        //   read the file
-        const lines = readFile(`${directory}\\${file}`);
-        //  pass it to process 1
-        const valid_lines = process1(lines);
-        // pass it to process 2
-        const data = process2(valid_lines);
-        writeFile("output", data);
-    });
-
-} else {
-    console.log(`The path you entered is invalid: ${directory}`)
-    return 0;
-}
 
 /// <summary> Read file, separate each account entry by line. </summary>
 /// <param name="fileName"> The name of the file </param>
@@ -38,6 +48,9 @@ function readFile(fileName) {
     return fs.readFileSync(fileName).toString().split("\r\n");
 }
 
+////////////////////////////////////////////////////////////////////////////
+// Start of Part 2 of Assignment
+////////////////////////////////////////////////////////////////////////////
 /// <summary> 
 /// Reads each account entry and validates it using the specified parameters. It puts the validated account entries into an array, 
 /// and prints the invalid account entries on the console. 
@@ -51,7 +64,7 @@ function process1(linesArray) {
 
         if (line.length !== 0) {
             //console.log(`>>>>${line}<<<`);
-           /// creating checks, if each line meets the following requirements, then console log it as a MATCH
+            /// creating checks, if each line meets the following requirements, then console log it as a MATCH
             if (line.endsWith("ENDREC") && line.startsWith("REC") && line.includes("ACCOUNT")) {
                 // console.log("MATCH: put this in a new file", line);
                 valid_accounts.push(line);
@@ -65,6 +78,9 @@ function process1(linesArray) {
     return valid_accounts;
 }
 
+////////////////////////////////////////////////////////////////////////////
+// Start of Part3 of Assignment
+////////////////////////////////////////////////////////////////////////////
 /// <summary> 
 /// Using the valid accounts, two objects are created, the first oject will hold a summary of every account number 
 /// with the total dollar amount. The other object will hold all of the valid account entries.  
