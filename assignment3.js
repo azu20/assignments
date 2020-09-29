@@ -3,7 +3,7 @@ const fs = require('fs');
 // Start of Assignment 
 ////////////////////////////////////////////////////////////////////////////
 if (process.argv.length === 3 && process.argv[2].startsWith("-D=")) {
-    //run the following argument when user has entered on command line: length is not equal to 3, and third position of the array, does not have -D=, then console log the following message and kill program - return 0 . if true then carry on. 
+    //run the following argument when user has entered on command line: length must equal 3, and third position of the array starts with -D=, then run the funciton below. If it doesn't run else argunment lines 41-44 then console log the following message and kill program - return 0 . if true then carry on. 
     //why3? [node assignment3 -D="user input"]
 
     const directory = process.argv[2].split("=")[1];
@@ -11,7 +11,7 @@ if (process.argv.length === 3 && process.argv[2].startsWith("-D=")) {
 
     if (fs.existsSync(directory)) {
         //if directory exists, then it reads directory and returns an array with all file names
-        //if it doesn't it goes into the else argument on lines 35-38, console logs an error message, and exits program. 
+        //if it doesn't it goes into the else argument on lines 36-39, console logs an error message, and exits program. 
 
         const all_files = fs.readdirSync(directory);
         // example all_files: ['.git', 'Assignment1-Input-File.txt','assignment1.js' ]
