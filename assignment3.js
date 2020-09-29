@@ -4,7 +4,7 @@ const fs = require('fs');
 ////////////////////////////////////////////////////////////////////////////
 if (process.argv.length === 3 && process.argv[2].startsWith("-D=")) {
     //run the following argument when user has entered on command line: length is not equal to 3, and third position of the array, does not have -D=, then console log the following message and kill program - return 0 . if true then carry on. 
-    //why3? [node assinment3 -D="user input"]
+    //why3? [node assignment3 -D="user input"]
 
     const directory = process.argv[2].split("=")[1];
     //take the third element and split on the = sign - give me back an array and then give me the second element of that new array
@@ -70,7 +70,7 @@ function process1(linesArray) {
         //****loop through the linesArray and for each line, it will go throughthe following checks: 
 
         if (line.length !== 0) {
-            ///***if each line is not equal to 0 then process the following funciton, for those lines, no else which means if it is empty then nothing happense, as there is no code to tell it otherwise */
+            ///***if each line is not equal to 0 then process the following funciton. There is no else which means if it is empty then nothing happense, as there is no code to tell it otherwise */
 
             if (line.endsWith("ENDREC") && line.startsWith("REC") && line.includes("ACCOUNT")) {
                 /// each line that is greater than 0, has to then pass the following checks: must end with ENDREC and start with REC and include ACCOUNT
@@ -121,7 +121,7 @@ function process2(valid_accounts) {
 
             // example validLine: RECORD-ACCOUNT_NUMBER-0009-AMOUNT-90.00 This is just some text -ENDREC
             const record_array = validLine.split(" ")[0].split("-");
-            // example: [ 'RECORD', 'ACCOUNT_NUMBER', '0009', 'AMOUNT', '90.00' ]
+            // split it - example: [ 'RECORD', 'ACCOUNT_NUMBER', '0009', 'AMOUNT', '90.00' ] etc
 
             const account_number = record_array[2];
             // example: 0009
